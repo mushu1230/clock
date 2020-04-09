@@ -1,0 +1,510 @@
+<!doctype html PUBLIC>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>打卡</title>
+		<meta name="viewport" content="width=device-width user-scalable= 'no'">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="plugins/weui/css/weui.css" />
+		<link rel="stylesheet" type="text/css" href="plugins/weui/css/weuix.css" />
+
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" type="text/css" href="css/clockIn.css" />
+		<link rel="stylesheet" type="text/css" href="css/swiper.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/calendar_base.css" />
+		<!--周历，当前日期模板-->
+		<script type="text/template" id="template">
+			<li class="mui-table-view-cell em-active" date="{{date_frame}}">
+				<a class="mui-navigate-right"><span class="week">{{week_frame}}</span><span class="day">{{month_frame}}月{{day_frame}}日</span><span class="status mui-hidden">零</span></a>
+			</li>
+		</script>
+		<!--周历，非当前日期模板-->
+		<script type="text/template" id="template2">
+			<li class="mui-table-view-cell " date="{{date_frame}}">
+				<a class="mui-navigate-right"><span class="week">{{week_frame}}</span><span class="day">{{month_frame}}月{{day_frame}}日</span><span class="status mui-hidden">零</span></a>
+			</li>
+		</script>
+	</head>
+
+	<body onload="startTime()">
+		<div class="weui-tab">
+			<div class="weui-tab__bd">
+				<!--打卡-->
+				<div id="tab1" class="weui-tab__bd-item  weui-tab__bd-item--active">
+					<div id='container'></div>
+					<div class="daka-info" style="display: none;">
+						<h4 id='status'></h4>
+						<hr>
+						<p id='result'></p>
+						<hr>
+					</div>
+
+					<div id="box" class="">
+						<div class="daka-btn" id='show-toast'>
+							<button id='signbtn' class="text layui-btn layui-btn-normal">上班打卡</button>
+							<div id='time'>广达创远</div>
+						</div>
+						<div class="hint">
+							请在9:00前打卡
+						</div>
+						<div id="place" type="button" class="layui-btn-radius">非办公地点</div>
+						<div id='distance'>系统正在定位中</div>
+						<div id='location'>系统正在定位中</div>
+					</div>
+				</div>
+				<!--记录-->
+				<div id="tab2" class="weui-tab__bd-item statistics">
+					<!-- 容器 -->
+					<div class="main">
+						<div class="btn weui-cells">
+							<!-- Tab标题 -->
+							<span class="tab2-active spanList">实时统计</span>
+							<span class="spanList">周月统计</span>
+							<span class="spanList">我的</span>
+						</div>
+						<div class="context weui-cells">
+							<!-- tab2-con1 实时统计 -->
+							<div class="con" id="realTime">
+								<!--图表-->
+								<div id="main" style="width:240;height:240;"></div>
+								<div class="state-info">
+									<div class="info">
+										<div class="num num-clockIn ">
+											6
+										</div>
+										<div class="des">
+											未打卡
+										</div>
+									</div>
+									<div class="info">
+										<div class="num num-clockIn">
+											1
+										</div>
+										<div class="des">
+											迟到
+										</div>
+									</div>
+									<div class="info">
+										<div class="num num-clockIn">
+											6
+										</div>
+										<div class="des">
+											外勤
+										</div>
+									</div>
+									<div class="info">
+										<div class="num num-clockIn">
+											6
+										</div>
+										<div class="des">
+											早退
+										</div>
+									</div>
+									<div class="info">
+										<div class="num num-clockIn">
+											6
+										</div>
+										<div class="des">
+											地点异常
+										</div>
+									</div>
+									<div class="info">
+										<div class="num num-clockIn">
+											6
+										</div>
+										<div class="des">
+											设备异常
+										</div>
+									</div>
+								</div>
+								<div class="detail">
+									<div class="title">
+										打卡明细
+									</div>
+									<!--列表内容-->
+									<div class="report-cell displayNone">
+										<div class="customer-group weui-cell">
+											<div class="img">刘</div>
+											<div class="time-info">
+												<div class="info-myAtt">
+													<div class="name-info">
+														<span class="name">刘娜娜</span>
+													</div>
+													<div class="report">
+														<div class="describe">
+															软件研发部
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="detail">
+												<div class="state">
+													<div class="">迟到</div>
+												</div>
+											</div>
+										</div>
+										<div class="customer-group weui-cell">
+											<div class="img">刘</div>
+											<div class="time-info">
+												<div class="info-myAtt">
+													<div class="name-info">
+														<span class="name">刘娜娜</span>
+													</div>
+													<div class="report">
+														<div class="describe">
+															软件研发部
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="detail">
+												<div class="state">
+													<div class="">正常</div>
+												</div>
+											</div>
+										</div>
+										<div class="customer-group weui-cell">
+											<div class="img">刘</div>
+											<div class="time-info">
+												<div class="info-myAtt">
+													<div class="name-info">
+														<span class="name">刘娜娜</span>
+													</div>
+													<div class="report">
+														<div class="describe">
+															软件研发部
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="detail">
+												<div class="state">
+													<div class="">正常</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- tab2-con2 周月统计-->
+							<div class="con staWrap" id="monthType">
+								<div class="content">
+									<div class="btn-group dataType" id="timeTab">
+										<div class="timeBtn" style="border:none">
+											<div class=" btn-default WeekRang" data-role="time" data-time="week">周</div>
+											<div class=" btn-default MonthRang active" data-role="time" data-time="month">月</div>
+										</div>
+									</div>
+									<div style="display: inline-block;">
+										<div class="mui-content weekWrap" style="display: none;" id="week">
+											<div class="em-journal-bg">
+												<!--顶部标题-->
+												<div class="em-journal-title">
+													<div class="em-per-block weekpre">
+														<span class="mui-icon mui-icon-arrowleft"></span>
+
+													</div>
+													<div class="em-per-block weekmid">
+														<span>2017-08</span>
+													</div>
+													<div class="em-per-block weeknext">
+
+														<span class="mui-icon mui-icon-arrowright"></span>
+													</div>
+												</div>
+												<!--面板内容-->
+												<ul class="mui-table-view em-journal-pad" id="weekcalendar">
+												</ul>
+											</div>
+										</div>
+										<div class="mui-content monthWrap" id="month">
+											<div class="em-journal-title">
+												<div class="em-per-block pre">
+													<span class="mui-icon mui-icon-arrowleft"></span>
+
+												</div>
+												<div class="em-per-block mid">
+													<span>...</span>
+												</div>
+												<div class="em-per-block next">
+
+													<span class="mui-icon mui-icon-arrowright"></span>
+												</div>
+											</div>
+											<!--日历容器-->
+											<div id="monthcalendar">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--分隔-->
+								<div class="partition">
+								</div>
+
+								<!--打卡状态统计-->
+								<div class="weui-cells sta-info">
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											出勤人数
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											迟到
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											早退
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											缺卡
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											旷工
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											外勤
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											加班
+										</div>
+										<div class="list-r">
+											<span>6</span>人
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- tab2-con3 我的统计-->
+							<div class="con staWrap" id="mySta">
+								<div class="content">
+									<div class="btn-group dataType" id="timeTab">
+										<div class="timeBtn" style="border:none">
+											<div class=" btn-default WeekRang" data-role="time" data-time="week2">周</div>
+											<div class=" btn-default MonthRang active" data-role="time" data-time="month2">月</div>
+										</div>
+									</div>
+									<div style="display: inline-block;">
+										<div class="mui-content weekWrap" style="display: none;" id="week2">
+											<div class="em-journal-bg">
+												<!--顶部标题-->
+												<div class="em-journal-title">
+													<div class="em-per-block myweekpre">
+														<span class="mui-icon mui-icon-arrowleft"></span>
+
+													</div>
+													<div class="em-per-block myweekmid">
+														<span>2017-08</span>
+													</div>
+													<div class="em-per-block myweeknext">
+
+														<span class="mui-icon mui-icon-arrowright"></span>
+													</div>
+												</div>
+												<!--面板内容-->
+												<ul class="mui-table-view em-journal-pad" id="myweekcalendar">
+												</ul>
+											</div>
+										</div>
+										<div class="mui-content monthWrap" id="month2">
+											<div class="em-journal-title">
+												<div class="em-per-block mypre">
+													<span class="mui-icon mui-icon-arrowleft"></span>
+												</div>
+												<div class="em-per-block mymid">
+													<span>...</span>
+												</div>
+												<div class="em-per-block mynext">
+
+													<span class="mui-icon mui-icon-arrowright"></span>
+												</div>
+											</div>
+											<!--日历容器-->
+											<div id="mymonthcalendar">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--分隔-->
+								<div class="partition">
+								</div>
+								<!--打卡状态统计-->
+								<div class="weui-cells sta-info">
+									<div class="weui-cell report-cell">
+										<div class="customer-group">
+											<div class="img">刘</div>
+											<div class="time-info">
+												<div class="info-myAtt">
+													<div class="name-info">
+														<div class="">
+															<span class="name">刘垣辰</span>
+														</div>
+														<div class="post">软件研发部-开发</div>
+													</div>
+												</div>
+											</div>
+											<div class="detail">
+												<div class="state">
+													<a class="monthly" href="clockIn-record.html">
+														<img src="img/monthly.png" /> 打卡月历
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											出勤天数
+										</div>
+										<div class="list-r">
+											<span>6天</span>
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											休息天数
+										</div>
+										<div class="list-r">
+											<span>6天</span>
+
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											迟到
+										</div>
+										<div class="list-r">
+											<span>0分钟</span>
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											早退
+										</div>
+										<div class="list-r">
+											<span>0分钟</span>
+
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											缺卡
+										</div>
+										<div class="list-r">
+											<span>0次</span>
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											旷工
+										</div>
+										<div class="list-r">
+											<span>0</span>天
+										</div>
+									</div>
+									<div class="weui-cell sta-list">
+										<div class="list-l">
+											外勤
+										</div>
+										<div class="list-r">
+											<span>0次</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--底部固定导航-->
+			<div class="weui-tabbar">
+				<a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+					<div class="weui-tabbar__icon">
+						<i class="iconfont icon-qiandao"></i>
+					</div>
+					<p class="weui-tabbar__label active">打卡</p>
+				</a>
+				<a href="#tab2" class="weui-tabbar__item  ">
+					<div class="weui-tabbar__icon">
+						<i class="iconfont icon-tongji"></i>
+					</div>
+					<p class="weui-tabbar__label">统计</p>
+				</a>
+				<!--<a href="#tab3" class="weui-tabbar__item  ">
+					<div class="weui-tabbar__icon">
+						<i class="iconfont icon-tongji"></i>
+					</div>
+					<p class="weui-tabbar__label">设置</p>
+				</a>-->
+			</div>
+
+			<div class="fullBox" data-full="trim">
+				<div class="fullModal">
+					<div class="address-trim">
+					</div>
+
+				</div>
+				<div class="btn-box">
+					<a href="javascript:;" class="weui-btn weui-btn_primary close-full">确定</a>
+				</div>
+			</div>
+		</div>
+		<script src="plugins/weui/js/jquery-2.1.4.js"></script>
+		<script src="plugins/weui/js/jquery-weui.min.js"></script>
+		<script type="text/javascript" src="js/baes.js"></script>
+
+		<script src="plugins/weui/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+		<!--图表-->
+		<script src="plugins/weui/js/fastclick.js"></script>
+		<!--地图-->
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=b4da6160d26765a356e21ace59ccbc3a"></script>
+		<script src="https://webapi.amap.com/maps?v=1.4.15&key=b4da6160d26765a356e21ace59ccbc3a&plugin=AMap.CircleEditor"></script>
+		<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+		<!--周历，月历-->
+		<script src="plugins/weui/js/swiper.min.js"></script>
+		<script src="plugins/mui/js/mui.min.js"></script>
+		<script src="js/mustache.min.js"></script>
+		<script src="js/calendar_base_month.js"></script>
+		<script src="js/calendar_base_week.js"></script>
+		<script src="js/clockIn.js"></script>
+		<script type="text/javascript">
+			//点击穿透
+			$(function() {
+				FastClick.attach(document.getElementById('show-toast'));
+			});
+			tap();
+		</script>
+
+	</body>
+
+</html>

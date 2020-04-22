@@ -15,6 +15,11 @@ AMap.plugin('AMap.Geolocation', function() {
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
 			onComplete(result);
+			setInterval(function() {
+				$(".amap-geolocation-con").click()
+				//	console.log(getposition)
+				alert(getposition)
+			}, 5000);
 		} else {
 			onError(result);
 			alert("定位失败")
@@ -123,11 +128,11 @@ function onError(data) {
 //	log.success("创建地图成功");
 //}
 //五秒初始化地图一次
-setInterval(function() {
-	$(".amap-geolocation-con").click()
-//	console.log(getposition)
-	alert("刷新")
-}, 5000);
+//setInterval(function() {
+//	$(".amap-geolocation-con").click()
+////	console.log(getposition)
+//	alert("刷新")
+//}, 5000);
 
 /*--------------时钟---------------- */
 function startTime() {

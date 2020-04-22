@@ -2,12 +2,13 @@
 var map = new AMap.Map('container', {
 	resizeEnable: true,
 	center: [113.68060648, 34.79333863], //初始地图中心点
+	zoom: 15,
 });
 AMap.plugin('AMap.Geolocation', function() {
 	var geolocation = new AMap.Geolocation({
 		enableHighAccuracy: true, //是否使用高精度定位，默认:true
 		timeout: 1000,
-		GeoLocationFirst: false,
+		GeoLocationFirst: true,
 		maximumAge: 0, //定位结果缓存0毫秒，默认：0
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)

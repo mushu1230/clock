@@ -18,6 +18,8 @@ AMap.plugin('AMap.Geolocation', function() {
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
 			onComplete(result);
+alert("定位成功")
+
 		} else {
 			onError(result);
 			alert("定位失败")
@@ -47,7 +49,7 @@ function onComplete(data) {
 
 	console.log(distance);
 	//document.getElementById('distance').innerHTML = distancestr;
-	var setDistance = 150; //设定的打卡距离
+	var setDistance = 15; //设定的打卡距离
 
 	document.getElementById('location').innerHTML = location;
 
@@ -81,12 +83,13 @@ function onComplete(data) {
 	//绘制签到范围
 	var circle = new AMap.Circle({
 		center: shanghaizone,
-		radius: 1000, //半径
+		radius: 10, //半径
 		borderWeight: 1,
 		strokeOpacity: 1,
 		strokeOpacity: 0.2,
-		fillOpacity: 0.4,
+		fillOpacity: 0.2,
 	})
+
 
 	circle.setMap(map)
 	// 缩放地图到合适的视野级别

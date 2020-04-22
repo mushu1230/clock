@@ -1,11 +1,14 @@
 /*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
+	center: [113.68060648, 34.79333863], //初始地图中心点
 });
 AMap.plugin('AMap.Geolocation', function() {
 	var geolocation = new AMap.Geolocation({
 		enableHighAccuracy: true, //是否使用高精度定位，默认:true
-		timeout: 5000, //超过10秒后停止定位，默认：5s
+		timeout: 1000,
+		GeoLocationFirst: false,
+		maximumAge: 0, //定位结果缓存0毫秒，默认：0
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
 		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
@@ -18,7 +21,6 @@ AMap.plugin('AMap.Geolocation', function() {
 			onError(result);
 			alert("定位失败")
 			$(".reload").click();
-			alert("刷新页面")
 		}
 	});
 });

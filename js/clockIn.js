@@ -83,10 +83,10 @@ function onComplete(data) {
 	//绘制签到范围
 	var circle = new AMap.Circle({
 		center: shanghaizone,
-		radius: 10, //半径
+		radius: 150, //半径
 		borderWeight: 1,
 		strokeOpacity: 1,
-		strokeOpacity: 0.2,
+		strokeOpacity: 0,
 		fillOpacity: 0,
 	})
 

@@ -18,11 +18,13 @@ AMap.plugin('AMap.Geolocation', function() {
 			setInterval(function() {
 				$(".amap-geolocation-con").click()
 				console.log(getposition)
+				alert(getposition)
 			}, 5000);
 		} else {
 			onError(result);
+			alert("定位失败")
 			$(".reload").click();
-			console.log("reload")
+			alert("刷新页面")
 		}
 	});
 	renderUI();

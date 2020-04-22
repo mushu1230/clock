@@ -49,7 +49,7 @@ function onComplete(data) {
 
 	console.log(distance);
 	//document.getElementById('distance').innerHTML = distancestr;
-	var setDistance = 15; //设定的打卡距离
+	var setDistance = 150; //设定的打卡距离
 
 	document.getElementById('location').innerHTML = location;
 
@@ -87,7 +87,7 @@ function onComplete(data) {
 		borderWeight: 1,
 		strokeOpacity: 1,
 		strokeOpacity: 0.2,
-		fillOpacity: 0.2,
+		fillOpacity: 0,
 	})
 
 

@@ -112,16 +112,10 @@ function onError(data) {
 	document.getElementById('location').innerHTML = '失败原因排查信息:' + data.message;
 	console.log("定位失败")
 }
-//初始化地图
-function createMap() {
-	map = new AMap.Map('container', {
-		resizeEnable: true
-	});
-	log.success("创建地图成功");
-}
+
 //五秒初始化地图一次
 setInterval(function() {
-	createMap();
+		$(".amap-geolocation-con").click()
 	console.log("刷新")
 }, 5000);
 /*--------------时钟---------------- */

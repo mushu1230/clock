@@ -17,6 +17,8 @@ AMap.plugin('AMap.Geolocation', function() {
 			onComplete(result)
 		} else {
 			onError(result)
+$(".reload").click();
+console.log("reload")
 		}
 	});
 	renderUI();

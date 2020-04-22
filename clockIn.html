@@ -181,15 +181,14 @@
 			});
 		</script>
 <script type="text/javascript">
-/*-------------地图-------------*/
+	/*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
-	zoom: 11,
 });
 AMap.plugin('AMap.Geolocation', function() {
 	var geolocation = new AMap.Geolocation({
 		enableHighAccuracy: true, //是否使用高精度定位，默认:true
-		timeout: 1000, //超过10秒后停止定位，默认：5s
+		timeout: 10000, //超过10秒后停止定位，默认：5s
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
 		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
@@ -198,11 +197,7 @@ AMap.plugin('AMap.Geolocation', function() {
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
 			onComplete(result);
-			setInterval(function() {
-				$(".amap-geolocation-con").click()
-				//	console.log(getposition)
-				alert("刷新")
-			}, 5000);
+			alert("定位成功")
 		} else {
 			onError(result);
 			alert("定位失败")
@@ -210,8 +205,6 @@ AMap.plugin('AMap.Geolocation', function() {
 			alert("刷新页面")
 		}
 	});
-	renderUI();
-
 });
 //解析定位结果
 function onComplete(data) {
@@ -310,12 +303,27 @@ function onError(data) {
 //	});
 //	log.success("创建地图成功");
 //}
-//五秒初始化地图一次
-//setInterval(function() {
-//	$(".amap-geolocation-con").click()
-////	console.log(getposition)
-//	alert("刷新")
-//}, 5000);
+
+
+/*--------------时钟---------------- */
+function startTime() {
+	var today = new Date()
+	var h = today.getHours()
+	var m = today.getMinutes()
+	var s = today.getSeconds()
+	// add a zero in front of numbers<10
+	m = checkTime(m)
+	s = checkTime(s)
+	document.getElementById('time').innerHTML = h + ":" + m + ":" + s
+	t = setTimeout('startTime()', 500)
+}
+
+function checkTime(i) {
+	if(i < 10) {
+		i = "0" + i
+	}
+	return i
+}
 
 		</script>
 	</body>

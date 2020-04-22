@@ -14,11 +14,15 @@ AMap.plugin('AMap.Geolocation', function() {
 	map.addControl(geolocation);
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
-			onComplete(result)
+			onComplete(result);
+			setInterval(function() {
+				$(".amap-geolocation-con").click()
+				console.log(getposition)
+			}, 5000);
 		} else {
-			onError(result)
-$(".reload").click();
-console.log("reload")
+			onError(result);
+			$(".reload").click();
+			console.log("reload")
 		}
 	});
 	renderUI();
@@ -114,12 +118,15 @@ function onError(data) {
 	document.getElementById('location').innerHTML = '失败原因排查信息:' + data.message;
 	console.log("定位失败")
 }
-
+//初始化地图
+//function createMap() {
+//	map = new AMap.Map('container', {
+//		resizeEnable: true
+//	});
+//	log.success("创建地图成功");
+//}
 //五秒初始化地图一次
-setInterval(function() {
-		$(".amap-geolocation-con").click()
-	console.log("刷新")
-}, 10000);
+
 /*--------------时钟---------------- */
 function startTime() {
 	var today = new Date()

@@ -117,7 +117,7 @@ function onError(data) {
 setInterval(function() {
 		$(".amap-geolocation-con").click()
 	console.log("刷新")
-}, 5000);
+}, 10000);
 /*--------------时钟---------------- */
 function startTime() {
 	var today = new Date()

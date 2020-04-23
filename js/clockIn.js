@@ -84,9 +84,11 @@ AMap.plugin('AMap.Geolocation', function() {
 		var circle = new AMap.Circle({
 			center: shanghaizone,
 			radius: 300, //半径
-			borderWeight: 1,
-			strokeOpacity: 0.3,
-			fillOpacity: 0.3,
+			strokeColor: "#F33", //线颜色
+              strokeOpacity: 0.5, //线透明度
+              strokeWeight: 1, //线粗细度
+              fillColor: "#ee2200", //填充颜色
+              fillOpacity: 0.35//填充透明度
 		})
 
 		circle.setMap(map)

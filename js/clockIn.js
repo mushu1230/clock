@@ -18,7 +18,7 @@ AMap.plugin('AMap.Geolocation', function() {
 		if(status == 'complete') {
 			onComplete(result)
 			setInterval(function() {
-				//				$('.amap-geolocation-con').click();
+			$('.amap-geolocation-con').click();
 			}, 5000)
 		} else {
 			onError(result)
@@ -84,11 +84,10 @@ AMap.plugin('AMap.Geolocation', function() {
 		var circle = new AMap.Circle({
 			center: shanghaizone,
 			radius: 300, //半径
-			strokeColor: "#F33", //线颜色
-              strokeOpacity: 0.5, //线透明度
+              strokeOpacity: 0.35, //线透明度
               strokeWeight: 1, //线粗细度
-              fillColor: "#ee2200", //填充颜色
-              fillOpacity: 0.35//填充透明度
+
+              fillOpacity: 0.25//填充透明度
 		})
 
 		circle.setMap(map)

@@ -1,7 +1,8 @@
 /*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
-	center: [113.68060648, 34.79333863], //初始地图中心点
+	zoom:10,
+	center: [113.680723,34.793239], //初始地图中心点
 
 });
 AMap.plugin('AMap.Geolocation', function() {
@@ -10,109 +11,107 @@ AMap.plugin('AMap.Geolocation', function() {
 		timeout: 2000, //超过10秒后停止定位，默认：5s
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-		showCircle: false,        //定位成功后用圆圈表示定位精度范围，默认：true
 		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
+		showCircle: false,
+		noIpLocate:3,
+		noGeLocation:3,
 	});
 	map.addControl(geolocation);
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
 			onComplete(result)
 			setInterval(function() {
-			$('.amap-geolocation-con').click();
-			}, 5000)
+				$('.amap-geolocation-con').click();
+			},5000)
 		} else {
 			onError(result)
 		}
 	});
+});
+//解析定位结果
+function onComplete(data) {
+	document.getElementById('status').innerHTML = '定位成功'
+	var str = [];
+	str.push('定位结果：' + data.position);
+	str.push('定位类别：' + data.location_type);
+	if(data.accuracy) {
+		str.push('精度：' + data.accuracy + ' 米');
+	} //如为IP精确定位结果则没有精度信息
+	str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+	document.getElementById('result').innerHTML = str.join('<br>');
 
-	AMap.event.addListener(geolocation, 'complete', onComplete);
-	AMap.event.addListener(geolocation, 'error', onError);
-	//解析定位结果
-	function onComplete(data) {
-		document.getElementById('status').innerHTML = '定位成功'
-		var str = [];
-		str.push('定位结果：' + data.position);
-		str.push('定位类别：' + data.location_type);
-		if(data.accuracy) {
-			str.push('精度：' + data.accuracy + ' 米');
-		} //如为IP精确定位结果则没有精度信息
-		str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
-		document.getElementById('result').innerHTML = str.join('<br>');
+	getposition = [data.position.lng, data.position.lat]; //获取当前位置的经纬度
+	var location = data.formattedAddress; //具体街道位置信息
+	console.log(getposition);
 
-		getposition = [data.position.lng, data.position.lat]; //获取当前位置的经纬度
-		var location = data.formattedAddress; //具体街道位置信息
-		console.log(getposition);
+	var shanghaizone = [113.680723,34.793239]; //设置的签到点
+	//计算当前位置与考勤点距离
+	var distance = AMap.GeometryUtil.distance(getposition, shanghaizone).toFixed(0);
 
-		var shanghaizone = [113.68060648, 34.79333863]; //设置的签到点
-		//计算当前位置与考勤点距离
-		var distance = AMap.GeometryUtil.distance(getposition, shanghaizone).toFixed(0);
+	console.log(distance);
+	//document.getElementById('distance').innerHTML = distancestr;
+	var setDistance = 300; //设定的打卡距离
 
-		console.log(distance);
-		//document.getElementById('distance').innerHTML = distancestr;
-		var setDistance = 300; //设定的打卡距离
+	document.getElementById('location').innerHTML = location;
 
-		document.getElementById('location').innerHTML = location;
+	var distancestr = '仍距' + distance + '米';
+	console.log(distance);
 
-		var distancestr = '仍距' + distance + '米';
-		console.log(distance);
+	if(distance <= setDistance) {
+		//在范围内
+		document.getElementById('distance').innerHTML = '</i><i class="layui-icon layui-icon-face-smile" style="font-size:12px; color:#17bc84; border-radius: 10px;">  你已进入考勤范围  </i>  ';
+		document.getElementById("place").innerHTML = "办公地点 ";
+		$("#place").addClass("isdiy");
+		//$("#signbtn").html("外勤打卡")
+
+	} else {
+		//不在范围内
+		document.getElementById('distance').innerHTML = '<div style="display:inline" class="layui-icon layui-icon-face-cry" style="font-size: 10px; color:red;  border-radius: 10px;">  当前不在考勤范围 </div><a style="color:#29a6ff" onClick="window.location.reload()">重新定位 </a> ';
+		document.getElementById("place").innerHTML = "非办公地点 ";
+		$("#place").addClass("nodiy");
+		$("#signbtn").html("外勤打卡")
+	}
+
+	$("#signbtn").click(function() {
 
 		if(distance <= setDistance) {
-			//在范围内
-			document.getElementById('distance').innerHTML = '</i><i class="layui-icon layui-icon-face-smile" style="font-size:12px; color:#17bc84; border-radius: 10px;">  你已进入考勤范围  </i>  ';
-			document.getElementById("place").innerHTML = "办公地点 ";
-			$("#place").addClass("isdiy");
-			//$("#signbtn").html("外勤打卡")
-
+			layer.msg("办公地点打卡");
 		} else {
-			//不在范围内
-			document.getElementById('distance').innerHTML = '<div style="display:inline" class="layui-icon layui-icon-face-cry" style="font-size: 10px; color:red;  border-radius: 10px;">  当前不在考勤范围 </div><a style="color:#29a6ff" onClick="window.location.reload()">重新定位 </a> ';
-			document.getElementById("place").innerHTML = "非办公地点 ";
-			$("#place").addClass("nodiy");
-			$("#signbtn").html("外勤打卡")
+			layer.msg("外勤打卡");
 		}
+	});
 
-		$("#signbtn").click(function() {
+	//绘制签到范围
+	var circle = new AMap.Circle({
+		center: shanghaizone,
+		radius: 300, //半径
+		borderWeight: 1,
+		strokeOpacity: 0.5,
+        strokeWeight: 1, //线粗细度
+        fillOpacity: 0.25//填充透明度
+	})
 
-			if(distance <= setDistance) {
-				layer.msg("办公地点打卡");
-			} else {
-				layer.msg("外勤打卡");
-			}
+	circle.setMap(map)
+	// 缩放地图到合适的视野级别
+//	map.setFitView([circle])
+	var circleEditor = new AMap.CircleEditor(map, circle);
+
+	/*--------------签到-----------------*/
+	$(document).on("click", "#show-toast", function() {
+		trimAdress = $("#location").text();
+		$("#show-toast").addClass("active")
+			.find(".text").html("打卡成功")
+		$("#show-toast").removeAttr("id");
+		startTime()
+		//打印地址和时间
+		$.toast("打卡成功", function() {
+			alert(trimAdress);
+			alert(getposition);
+			alert($("#time").text());
+
 		});
-
-		//绘制签到范围
-		var circle = new AMap.Circle({
-			center: shanghaizone,
-			radius: 300, //半径
-              strokeOpacity: 0.35, //线透明度
-              strokeWeight: 1, //线粗细度
-
-              fillOpacity: 0.25//填充透明度
-		})
-
-		circle.setMap(map)
-		// 缩放地图到合适的视野级别
-		map.setFitView([circle])
-		var circleEditor = new AMap.CircleEditor(map, circle);
-
-		/*--------------签到-----------------*/
-		$(document).on("click", "#show-toast", function() {
-			trimAdress = $("#location").text();
-			$("#show-toast").addClass("active")
-				.find(".text").html("打卡成功")
-			$("#show-toast").removeAttr("id");
-			startTime()
-			//打印地址和时间
-			$.toast("打卡成功", function() {
-				alert(trimAdress);
-				alert(getposition);
-				alert($("#time").text());
-
-			});
-		})
-	}
-});
-
+	})
+}
 //解析定位错误信息
 function onError(data) {
 	document.getElementById('location').innerHTML = '定位失败';

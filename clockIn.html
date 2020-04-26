@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="css/clockIn.css" />
 	</head>
 
-	<body>
+	<body onload="startTime()">
 		<div class="weui-tab">
 			<div class="weui-tab__bd">
 				<!--打卡-->
@@ -29,7 +29,9 @@
 						<p id='result'></p>
 						<hr>
 					</div>
-
+					<div class="daka-mark" style="width: 100%;background: #fafafa;height: 50%;position: absolute;top: 0;z-index: 9999;">
+						您已进入打卡范围
+					</div>
 					<div id="box" class="">
 						<div class="daka-btn" id='show-toast'>
 							<button id='signbtn' class="text layui-btn layui-btn-normal">上班打卡</button>

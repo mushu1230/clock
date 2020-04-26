@@ -1,8 +1,8 @@
 /*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
-	zoom:10,
-	center: [113.68060648, 34.79333863], //初始地图中心点
+	zoom:13,
+	center: [113.680723,34.793239], //初始地图中心点
 
 });
 AMap.plugin('AMap.Geolocation', function() {
@@ -12,7 +12,7 @@ AMap.plugin('AMap.Geolocation', function() {
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
 		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
-		showCircle: true,
+		showCircle: false,
 	});
 	map.addControl(geolocation);
 	geolocation.getCurrentPosition(function(status, result) {
@@ -42,7 +42,7 @@ function onComplete(data) {
 	var location = data.formattedAddress; //具体街道位置信息
 	console.log(getposition);
 
-	var shanghaizone = [113.68060648, 34.79333863]; //设置的签到点
+	var shanghaizone = [113.680723,34.793239]; //设置的签到点
 	//计算当前位置与考勤点距离
 	var distance = AMap.GeometryUtil.distance(getposition, shanghaizone).toFixed(0);
 

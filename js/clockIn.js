@@ -92,7 +92,7 @@ function onComplete(data) {
 	circle.setMap(map)
 	// 缩放地图到合适的视野级别
 //	map.setFitView([circle])
-	var circleEditor = new AMap.CircleEditor(map, circle);
+//	var circleEditor = new AMap.CircleEditor(map, circle);
 
 	/*--------------签到-----------------*/
 	$(document).on("click", "#show-toast", function() {

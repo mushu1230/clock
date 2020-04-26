@@ -1,7 +1,7 @@
 /*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
-	zoom:5,
+	zoom:15,
 	center: [113.680723,34.793239], //初始地图中心点
 
 });

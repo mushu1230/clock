@@ -1,8 +1,6 @@
 /*-------------地图-------------*/
 var map = new AMap.Map('container', {
 	resizeEnable: true,
-	zoom:15,
-	center: [113.680723,34.793239], //初始地图中心点
 
 });
 AMap.plugin('AMap.Geolocation', function() {
@@ -12,7 +10,6 @@ AMap.plugin('AMap.Geolocation', function() {
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
 		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
-		showCircle: false,
 	});
 	map.addControl(geolocation);
 	geolocation.getCurrentPosition(function(status, result) {

@@ -8,10 +8,10 @@ var map = new AMap.Map('container', {
 AMap.plugin('AMap.Geolocation', function() {
 	var geolocation = new AMap.Geolocation({
 		enableHighAccuracy: true, //是否使用高精度定位，默认:true
-		timeout: 500, //超过10秒后停止定位，默认：5s
+		timeout: 1000, //超过10秒后停止定位，默认：5s
 		buttonPosition: 'RB', //定位按钮的停靠位置
 		buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-		zoomToAccuracy: true, //定位成功后是否自动调整地图视野到定位点
+		zoomToAccuracy: false, //定位成功后是否自动调整地图视野到定位点
 		showCircle: false,
 	});
 	map.addControl(geolocation);
@@ -20,6 +20,7 @@ AMap.plugin('AMap.Geolocation', function() {
 			onComplete(result)
 			setInterval(function() {
 				$('.amap-geolocation-con').click();
+//				alert(getposition)
 			},5000)
 		} else {
 			onError(result)
@@ -48,7 +49,7 @@ function onComplete(data) {
 
 	console.log(distance);
 	//document.getElementById('distance').innerHTML = distancestr;
-	var setDistance = 300; //设定的打卡距离
+	var setDistance = 350; //设定的打卡距离
 
 	document.getElementById('location').innerHTML = location;
 
@@ -61,6 +62,7 @@ function onComplete(data) {
 		document.getElementById("place").innerHTML = "办公地点 ";
 		$("#place").addClass("isdiy");
 		//$("#signbtn").html("外勤打卡")
+		$(".daka-mark").show();
 
 	} else {
 		//不在范围内
@@ -68,6 +70,8 @@ function onComplete(data) {
 		document.getElementById("place").innerHTML = "非办公地点 ";
 		$("#place").addClass("nodiy");
 		$("#signbtn").html("外勤打卡")
+		$(".daka-mark").hide();
+		
 	}
 
 	$("#signbtn").click(function() {
@@ -80,17 +84,29 @@ function onComplete(data) {
 	});
 
 	//绘制签到范围
+	//实际打卡范围
 	var circle = new AMap.Circle({
+		center: shanghaizone,
+		radius: 450, //半径
+		borderWeight: 1,
+		strokeOpacity: 0,
+        strokeWeight: 1, //线粗细度
+        fillOpacity: 0//填充透明度
+	})
+	circle.setMap(map);
+	//显示打卡范围
+	var circle2 = new AMap.Circle({
 		center: shanghaizone,
 		radius: 300, //半径
 		borderWeight: 1,
 		strokeOpacity: 0.5,
         strokeWeight: 1, //线粗细度
-        fillOpacity: 0.25//填充透明度
+        fillOpacity: 0.2//填充透明度
 	})
-
-	circle.setMap(map)
+	circle2.setMap(map)
 	// 缩放地图到合适的视野级别
+//	map.setFitView([circle])
+//	var circleEditor = new AMap.CircleEditor(map, circle);
 
 	/*--------------签到-----------------*/
 	$(document).on("click", "#show-toast", function() {

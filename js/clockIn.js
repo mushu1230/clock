@@ -51,7 +51,7 @@ function onApiLoaded() {
 
 		console.log(distance);
 		//document.getElementById('distance').innerHTML = distancestr;
-		var setDistance = 350; //设定的打卡距离
+		var setDistance = 450; //设定的打卡距离
 
 		document.getElementById('location').innerHTML = location;
 
@@ -61,28 +61,27 @@ function onApiLoaded() {
 		if(distance <= setDistance) {
 			//在范围内
 			document.getElementById('distance').innerHTML = '</i><i class="layui-icon layui-icon-face-smile" style="font-size:12px; color:#17bc84; border-radius: 10px;">  你已进入考勤范围  </i>  ';
-			document.getElementById("place").innerHTML = "办公地点 ";
-			$("#place").addClass("isdiy");
+//			document.getElementById("place").innerHTML = "广达创远 ";
+//			$("#place").addClass("isdiy");
 			//$("#signbtn").html("外勤打卡")
 			//范围内向上移动动画
 			$(".daka-mark").show();
-			$(".daka-mark").animate({ top: '0%' }, 500);   
-			$("#box").animate({ top: '35%' }, 500);
+			$(".daka-mark").animate({ top: '0%' }, 500);
+			$("#box").animate({ top: '48%' }, 500);
 
 		} else {
 			//不在范围内
 			document.getElementById('distance').innerHTML = '<div style="display:inline" class="layui-icon layui-icon-face-cry" style="font-size: 10px; color:red;  border-radius: 10px;">  当前不在考勤范围 </div><a style="color:#29a6ff" onClick="window.location.reload()">重新定位 </a> ';
-			document.getElementById("place").innerHTML = "非办公地点 ";
-			$("#place").addClass("nodiy");
+//			document.getElementById("place").innerHTML = "非办公地点 ";
+//			$("#place").addClass("nodiy");
 			$("#signbtn").html("外勤打卡")
 			//范围外向下移动动画
 			$(".daka-mark").hide();
 			$(".daka-mark").animate({ top: '48%' }, 500)
-			$("#box").animate({ top: '48%' }, 500);
+			$("#box").animate({ top: '35%' }, 500);
 		}
 
 		$("#signbtn").click(function() {
-
 			if(distance <= setDistance) {
 				layer.msg("办公地点打卡");
 			} else {
@@ -127,7 +126,6 @@ function onApiLoaded() {
 				alert(trimAdress);
 				alert(getposition);
 				alert($("#time").text());
-
 			});
 		})
 	}

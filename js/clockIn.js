@@ -67,7 +67,7 @@ function onApiLoaded() {
 			//范围内向上移动动画
 			$(".daka-mark").show();
 			$(".daka-mark").animate({ top: '0%' }, 1000);
-			$("#box").animate({ top: '20%' }, 1000);
+			$("#box").animate({ top: '15%' }, 1000);
 
 		} else {
 			//不在范围内

@@ -1,11 +1,12 @@
 /*-------------地图-------------*/
-var map = new AMap.Map('container', {
+ function onApiLoaded(){
+        var map = new AMap.Map('container', {
 	resizeEnable: true,
 	zoom:15,
 	center: [113.680723,34.793239], //初始地图中心点
 
 });
-AMap.plugin('AMap.Geolocation', function() {
+       AMap.plugin('AMap.Geolocation', function() {
 	var geolocation = new AMap.Geolocation({
 		enableHighAccuracy: true, //是否使用高精度定位，默认:true
 		timeout: 1000, //超过10秒后停止定位，默认：5s
@@ -15,13 +16,15 @@ AMap.plugin('AMap.Geolocation', function() {
 		showCircle: false,
 	});
 	map.addControl(geolocation);
+	
 	geolocation.getCurrentPosition(function(status, result) {
 		if(status == 'complete') {
 			onComplete(result)
 			setInterval(function() {
 				$('.amap-geolocation-con').click();
 //				alert(getposition)
-			},5000)
+			},5000);
+			
 		} else {
 			onError(result)
 		}
@@ -62,15 +65,19 @@ function onComplete(data) {
 		document.getElementById("place").innerHTML = "办公地点 ";
 		$("#place").addClass("isdiy");
 		//$("#signbtn").html("外勤打卡")
-		$(".daka-mark").show();
 
+		$(".daka-mark").show();
+		$(".daka-mark").animate({top:'0%'},1000)
+		
 	} else {
 		//不在范围内
 		document.getElementById('distance').innerHTML = '<div style="display:inline" class="layui-icon layui-icon-face-cry" style="font-size: 10px; color:red;  border-radius: 10px;">  当前不在考勤范围 </div><a style="color:#29a6ff" onClick="window.location.reload()">重新定位 </a> ';
 		document.getElementById("place").innerHTML = "非办公地点 ";
 		$("#place").addClass("nodiy");
 		$("#signbtn").html("外勤打卡")
+		
 		$(".daka-mark").hide();
+		$(".daka-mark").animate({top:'48%'})
 		
 	}
 
@@ -129,6 +136,16 @@ function onError(data) {
 	document.getElementById('location').innerHTML = '定位失败';
 	document.getElementById('location').innerHTML = '失败原因排查信息:' + data.message;
 }
+    }
+     var url = 'https://webapi.amap.com/maps?v=1.4.15&key=b4da6160d26765a356e21ace59ccbc3a&callback=onApiLoaded';
+    var jsapi = document.createElement('script');
+    jsapi.charset = 'utf-8';
+    jsapi.src = url;
+    document.head.appendChild(jsapi);
+
+
+
+
 
 /*--------------时钟---------------- */
 function startTime() {

@@ -5,6 +5,20 @@ function onApiLoaded() {
 		zoom: 15,
 		center: [113.680723, 34.793239], //初始地图中心点
 	});
+	//绘制签到范围
+	//实际打卡范围
+	var shanghaizone = [113.680723, 34.793239]; //设置的签到点
+
+	var circle = new AMap.Circle({
+		center: shanghaizone,
+		radius: 450, //半径
+		borderWeight: 1,
+		strokeOpacity: 0.25,
+		strokeWeight: 1, //线粗细度
+		fillOpacity: 0.25 //填充透明度
+	})
+	circle.setMap(map);
+
 	AMap.plugin('AMap.Geolocation', function() {
 		var geolocation = new AMap.Geolocation({
 			enableHighAccuracy: true, //是否使用高精度定位，默认:true
@@ -15,19 +29,22 @@ function onApiLoaded() {
 			showCircle: false,
 		});
 		map.addControl(geolocation);
-
 		geolocation.getCurrentPosition(function(status, result) {
 			if(status == 'complete') {
 				onComplete(result)
-				setInterval(function() {
-					$('.amap-geolocation-con').click();
-					//				alert(getposition)
-				}, 5000);
-
 			} else {
 				onError(result)
 			}
 		});
+		setInterval(function() {
+			geolocation.getCurrentPosition(function(status, result) {
+				if(status == 'complete') {
+					onComplete(result)
+				} else {
+					onError(result)
+				}
+			});
+		}, 2000);
 	});
 	//解析定位结果
 	function onComplete(data) {
@@ -45,7 +62,6 @@ function onApiLoaded() {
 		var location = data.formattedAddress; //具体街道位置信息
 		console.log(getposition);
 
-		var shanghaizone = [113.680723, 34.793239]; //设置的签到点
 		//计算当前位置与考勤点距离
 		var distance = AMap.GeometryUtil.distance(getposition, shanghaizone).toFixed(0);
 
@@ -61,24 +77,24 @@ function onApiLoaded() {
 		if(distance <= setDistance) {
 			//在范围内
 			document.getElementById('distance').innerHTML = '</i><i class="layui-icon layui-icon-face-smile" style="font-size:12px; color:#17bc84; border-radius: 10px;">  你已进入考勤范围  </i>  ';
-//			document.getElementById("place").innerHTML = "广达创远 ";
-//			$("#place").addClass("isdiy");
+			//			document.getElementById("place").innerHTML = "广达创远 ";
+			//			$("#place").addClass("isdiy");
 			//$("#signbtn").html("外勤打卡")
 			//范围内向上移动动画
 			$(".daka-mark").show();
-			$(".daka-mark").animate({ top: '0%' }, 500);
-			$("#box").animate({ top: '48%' }, 500);
+			$(".daka-mark").animate({ top: '0%' }, 600);
+			$("#box").animate({ top: '32%' }, 600);
 
 		} else {
 			//不在范围内
 			document.getElementById('distance').innerHTML = '<div style="display:inline" class="layui-icon layui-icon-face-cry" style="font-size: 10px; color:red;  border-radius: 10px;">  当前不在考勤范围 </div><a style="color:#29a6ff" onClick="window.location.reload()">重新定位 </a> ';
-//			document.getElementById("place").innerHTML = "非办公地点 ";
-//			$("#place").addClass("nodiy");
+			//			document.getElementById("place").innerHTML = "非办公地点 ";
+			//			$("#place").addClass("nodiy");
 			$("#signbtn").html("外勤打卡")
 			//范围外向下移动动画
 			$(".daka-mark").hide();
-			$(".daka-mark").animate({ top: '48%' }, 500)
-			$("#box").animate({ top: '35%' }, 500);
+			$(".daka-mark").animate({ top: '48%' }, 600)
+			$("#box").animate({ top: '48%' }, 600);
 		}
 
 		$("#signbtn").click(function() {
@@ -89,27 +105,6 @@ function onApiLoaded() {
 			}
 		});
 
-		//绘制签到范围
-		//实际打卡范围
-		var circle = new AMap.Circle({
-			center: shanghaizone,
-			radius: 450, //半径
-			borderWeight: 1,
-			strokeOpacity: 0,
-			strokeWeight: 1, //线粗细度
-			fillOpacity: 0 //填充透明度
-		})
-		circle.setMap(map);
-		//显示打卡范围
-		var circle2 = new AMap.Circle({
-			center: shanghaizone,
-			radius: 300, //半径
-			borderWeight: 1,
-			strokeOpacity: 0.5,
-			strokeWeight: 1, //线粗细度
-			fillOpacity: 0.2 //填充透明度
-		})
-		circle2.setMap(map)
 		// 缩放地图到合适的视野级别
 		//	map.setFitView([circle])
 		//	var circleEditor = new AMap.CircleEditor(map, circle);

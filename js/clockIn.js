@@ -66,7 +66,7 @@ function onApiLoaded() {
 			//$("#signbtn").html("外勤打卡")
 			//范围内向上移动动画
 			$(".daka-mark").show();
-			$(".daka-mark").animate({ top: '0%' }, 500);
+			$(".daka-mark").animate({ top: '0%' }, 500);   
 			$("#box").animate({ top: '15%' }, 500);
 
 		} else {

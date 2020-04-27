@@ -64,7 +64,7 @@ body {
 }
 
 #container {
-  height: 44%;
+  height: 48%;
   width: 100%;
   margin: 0 auto;
 }
@@ -110,8 +110,13 @@ body {
 #box {
   /*position: fixed;
           bottom: 0;*/
-  margin-top: 50px;
+  padding-top: 50px;
   width: 100%;
+  margin-bottom: 60px;
+  position: absolute;
+  top: 48%;
+  z-index: 2;
+  background: #fafafa;
 }
 
 #history {
@@ -220,13 +225,9 @@ body {
 }
 #tab2 .main {
   width: 100%;
-  height: 50px;
 }
 #tab2 .main .weui-cells {
   margin: 0 0 15px 0;
-}
-#tab2 .main .context {
-  margin-top: 65px;
 }
 #tab2 .main .btn {
   height: 50px;
@@ -499,6 +500,7 @@ body {
   height: 15px;
   background: #fafafa;
   border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
 }
 #tab2 .staWrap .sta-info {
   margin: 0;
@@ -511,6 +513,9 @@ body {
 }
 #tab2 .staWrap .sta-info .sta-list .list-r {
   color: #999;
+}
+#tab2 .staWrap .sta-info.weui-cells:before {
+  border: none;
 }
 #tab2 .staWrap .weui-cell {
   display: flex;
@@ -611,6 +616,7 @@ body {
   background-color: #63a2e4;
   color: #FFFFFF;
   text-align: center;
+  margin-top: 3px;
 }
 #clockIn-record .bd .weui-cells .report-cell .customer-group .time-info {
   width: 60%;
@@ -698,4 +704,411 @@ body {
 }
 #clockIn-record .swiper-slide {
   width: 100% !important;
+}
+
+.workRecord {
+  margin: 0 0 30px 0 !important;
+}
+
+.mui-content {
+  height: max-content;
+}
+
+.layui-icon {
+  font-style: inherit;
+}
+
+#clockIn-sta {
+  background-color: #fff;
+}
+#clockIn-sta #realTime {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+#clockIn-sta #realTime #main {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin-top: 30px;
+}
+#clockIn-sta #realTime .state-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 6% 8% 4% 8%;
+  text-align: center;
+}
+#clockIn-sta #realTime .state-info .info {
+  width: 33.3%;
+  margin-bottom: 20px;
+}
+#clockIn-sta #realTime .state-info .info .num {
+  font-size: 20px;
+  color: #333;
+}
+#clockIn-sta #realTime .state-info .info .des {
+  font-size: 13px;
+  color: #666;
+}
+#clockIn-sta #realTime .detail .title {
+  height: 26px;
+  background-color: #fafafa;
+  color: #666;
+  font-size: 12px;
+  line-height: 26px;
+  text-align: left;
+  padding: 0 15px;
+  border-top: 1px solid #ededed;
+  border-bottom: 1px solid #ededed;
+}
+#clockIn-sta #realTime .detail .report-cell {
+  flex-direction: column;
+  align-items: normal;
+  margin-bottom: 40px;
+  margin-top: 0;
+}
+#clockIn-sta #realTime .detail .report-cell .report {
+  margin-top: 8px;
+  color: #666;
+}
+#clockIn-sta #realTime .detail .report-cell .weui-cell {
+  display: flex;
+  overflow: hidden;
+}
+#clockIn-sta #realTime .detail .report-cell.weui-cells:before {
+  border: none;
+}
+#clockIn-sta #realTime .detail .customer-group {
+  display: flex;
+  justify-content: space-between;
+}
+#clockIn-sta #realTime .detail .customer-group:last-child {
+  margin-bottom: 0px;
+}
+#clockIn-sta #realTime .detail .customer-group .img {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  margin-right: 10px;
+  background-color: #63a2e4;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 5px;
+}
+#clockIn-sta #realTime .detail .customer-group .time-info {
+  width: 60%;
+  flex: 1;
+}
+#clockIn-sta #realTime .detail .customer-group .time-info .describe {
+  line-height: 16px;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #666;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#clockIn-sta #realTime .detail .customer-group .time-info .describe p {
+  display: inline;
+  line-height: 20px;
+}
+#clockIn-sta #realTime .detail .customer-group .time-info .info-myAtt {
+  font-size: 16px;
+  color: #333;
+}
+#clockIn-sta #realTime .detail .customer-group .time-info .info-myAtt .name-info {
+  text-align: left;
+}
+#clockIn-sta #realTime .detail .customer-group .detail {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: space-between;
+}
+#clockIn-sta #realTime .detail .customer-group .detail .date {
+  line-height: 20px;
+  font-size: 12px;
+  color: #999;
+}
+#clockIn-sta #realTime .detail .customer-group .detail .state {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 14px;
+  line-height: 42px;
+  color: #999;
+}
+#clockIn-sta #realTime .detail .customer-group .detail .state .record-pass {
+  color: #8ac48d;
+}
+#clockIn-sta #realTime .detail .customer-group .detail .state .record-wait {
+  color: #fcb058;
+}
+#clockIn-sta #realTime .detail .customer-group .detail .state .record-refuse {
+  color: #f27474;
+}
+#clockIn-sta #realTime .detail .displayNone::before {
+  border: none;
+}
+#clockIn-sta #realTime .detail .displayNone {
+  padding: 0;
+}
+#clockIn-sta .month-sta .staWrap {
+  margin: 0;
+  width: auto;
+}
+#clockIn-sta .month-sta .staWrap .content {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+#clockIn-sta .month-sta .staWrap .content .btn-default {
+  font-size: 14px;
+  width: 50%;
+  text-align: center;
+}
+#clockIn-sta .month-sta .staWrap .content .em-journal-title {
+  display: block;
+  height: 50px;
+}
+#clockIn-sta .month-sta .staWrap .content #monthcalendar {
+  display: none;
+}
+#clockIn-sta .month-sta .staWrap .content #month {
+  width: 100%;
+}
+#clockIn-sta .month-sta .staWrap .content #month .monthWrap {
+  width: 100%;
+  margin-right: 0;
+}
+#clockIn-sta .month-sta .staWrap .content #month .monthWrap .em-per-block {
+  width: 33.3%;
+}
+
+#monthRecord {
+  width: 100%;
+}
+#monthRecord #main {
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin-top: 30px;
+}
+#monthRecord .state-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 6% 8% 4% 8%;
+  text-align: center;
+}
+#monthRecord .state-info .info {
+  width: 33.3%;
+  margin-bottom: 20px;
+}
+#monthRecord .state-info .info .num {
+  font-size: 20px;
+  color: #333;
+}
+#monthRecord .state-info .info .des {
+  font-size: 13px;
+  color: #666;
+}
+#monthRecord .report-cell {
+  flex-direction: column;
+  align-items: normal;
+}
+#monthRecord .report-cell .report {
+  margin-top: 8px;
+  color: #666;
+}
+#monthRecord .report-cell .weui-cell {
+  display: flex;
+  overflow: hidden;
+}
+#monthRecord .customer-group {
+  display: flex;
+  justify-content: space-between;
+}
+#monthRecord .customer-group .img {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  margin-right: 10px;
+  background-color: #63a2e4;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: 5px;
+}
+#monthRecord .customer-group .time-info {
+  width: 60%;
+  flex: 1;
+}
+#monthRecord .customer-group .time-info .describe {
+  line-height: 16px;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #666;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#monthRecord .customer-group .time-info .describe p {
+  display: inline;
+  line-height: 20px;
+}
+#monthRecord .customer-group .time-info .info-myAtt {
+  font-size: 16px;
+  color: #333;
+}
+#monthRecord .customer-group .time-info .info-myAtt .name-info {
+  text-align: left;
+}
+#monthRecord .customer-group .detail {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  justify-content: space-between;
+}
+#monthRecord .customer-group .detail .date {
+  line-height: 20px;
+  font-size: 12px;
+  color: #999;
+}
+#monthRecord .customer-group .detail .state {
+  text-align: right;
+  font-size: 14px;
+  color: #999;
+}
+#monthRecord .customer-group .detail .state .monthly {
+  font-size: 13px;
+  line-height: 43px;
+  height: 43px;
+}
+#monthRecord .customer-group .detail .state .monthly img {
+  width: 13px;
+  height: 13px;
+  margin-bottom: -1px;
+}
+#monthRecord .staWrap {
+  margin: 0;
+  width: auto;
+}
+#monthRecord .staWrap .content {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+#monthRecord .staWrap .content .btn-default {
+  font-size: 14px;
+  width: 50%;
+  text-align: center;
+}
+#monthRecord .staWrap .em-per-block {
+  width: 33.3%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: space-around;
+}
+#monthRecord .staWrap .em-per-block.next:active,
+#monthRecord .staWrap .em-per-block.pre:active {
+  background: none;
+}
+#monthRecord .staWrap .mui-icon-arrowleft {
+  background: url(../img/icon-right.png) no-repeat;
+  transform: rotateY(180deg);
+  display: inline-block;
+  height: 14px;
+  width: 12px;
+}
+#monthRecord .staWrap .mui-icon-arrowright {
+  background: url(../img/icon-right.png) no-repeat;
+  height: 14px;
+  width: 12px;
+  display: inline-block;
+}
+#monthRecord .staWrap .partition {
+  height: 15px;
+  background: #fafafa;
+  border-top: 1px solid #ededed;
+}
+#monthRecord .staWrap .sta-info {
+  margin: 0;
+}
+#monthRecord .staWrap .sta-info .sta-list {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #333;
+}
+#monthRecord .staWrap .sta-info .sta-list .list-r {
+  color: #999;
+}
+#monthRecord .em-journal-title {
+  display: block;
+  height: 75px;
+}
+#monthRecord #monthcalendar {
+  display: none;
+}
+#monthRecord #month {
+  width: 40%;
+}
+#monthRecord #month .monthWrap {
+  width: 100%;
+  margin-right: 0;
+}
+#monthRecord #month .monthWrap .em-per-block {
+  width: 33.3%;
+}
+
+.amap-logo,
+.amap-copyright {
+  display: none;
+  visibility: hidden !important;
+}
+
+#signbtn:active {
+  background-color: inherit;
+}
+
+.amap-geolocation-con {
+  z-index: 1 !important;
+}
+
+.weui-tabbar {
+  position: fixed;
+  bottom: 0;
+}
+
+.daka-mark {
+  width: 100%;
+  background: #fafafa;
+  height: 50%;
+  position: absolute;
+  top: 48%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+.daka-mark .des {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.daka-mark .des img {
+  margin: 0 auto;
 }

@@ -66,8 +66,8 @@ function onApiLoaded() {
 			//$("#signbtn").html("外勤打卡")
 			//范围内向上移动动画
 			$(".daka-mark").show();
-			$(".daka-mark").animate({ top: '0%' }, 500);
-			$("#box").animate({ top: '15%' }, 500);
+			$(".daka-mark").animate({ top: '0%' }, 0);
+			$("#box").animate({ top: '15%' }, 0);
 
 		} else {
 			//不在范围内
@@ -77,8 +77,8 @@ function onApiLoaded() {
 			$("#signbtn").html("外勤打卡")
 			//范围外向下移动动画
 			$(".daka-mark").hide();
-			$(".daka-mark").animate({ top: '48%' }, 500)
-			$("#box").animate({ top: '48%' }, 500);
+			$(".daka-mark").animate({ top: '48%' }, 0)
+			$("#box").animate({ top: '48%' }, 0);
 		}
 
 		$("#signbtn").click(function() {
